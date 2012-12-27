@@ -1,0 +1,190 @@
+<html>
+<head>
+<title>Couchbase Support Bootup - One Pager</title>
+<body>
+<a href="http://www.couchbase.com/"><img src="http://www.couchbase.com/sites/all/themes/couchbase12/logo.png" class="float-left" alt="Couchbase" /></a>
+<p><b><u><i><font color="darkred">Reference Links</font></u></i></b></p>
+<p><a href="http://www.couchbase.com/download">Download CouchBase</a></p>
+<p><a href="http://www.couchbase.com/develop">CouchBase Language Specific APIs</a></p>
+<p><a href="http://www.couchbase.com/docs/couchbase-manual-1.8.pdf">CouchBase Server Manual</a></p>
+<p><a href="http://www.couchbase.com/docs/couchbase-devguide-1.8.pdf">CouchBase Developer Guide</a></p>
+<p><b><u><i><font color="darkred">Support Links</font></u></i></b></p>
+<p><a href="https://exchange.intermedia.net/aspx/Login.aspx?platform=exchange">CouchBase Email Access</a></p>
+<p><a href="http://support.couchbase.com/home">CouchBase Zen Desk(Trouble Ticketing)</a></p>
+<p><a href="http://www.couchbase.com/issues/secure/Dashboard.jspa">CouchBase Issue Tracking(JIRA)</a></p>
+<p><a href="http://www.couchbase.com/forums">CouchBase Forums</a></p>
+<p><b><i><u><font color="darkred">Couchbase Project Contacts</font></u></i></b></p>
+<p><b><u><i><font color="darkred">Frequently Asked Questions</font></u></i></b></p>
+<p><i><b>1. What is a rebalance?</p></i></b>
+<p>In order to serve the purpose of scaling in terms of handling change in application load,RAM and Storage, additional nodes are added/removed in order to balance the information across while making sure the application is up and running serving requests</p>
+<p><i><b>2. What is a failover?</p></i></b>
+<p>In case of a node failure, this functionality promote  the replica vBuckets to become active immediatley so that the data is still served in case of a failure. A rebalance is required to bring the cluster back to the healthy state(which would have been in a degraded state due to high load on the nodes that are holding the replica)</p>
+<p><i><b>3. What happens when you click remove node?</p></i></b>
+<p>A Remove Node Operation will remove the node from the Cluster after a Rebalance to make sure the data is distributed and moved around the cluster</p>
+<p><i><b>4. What happens when you add a node?</p></i></b>
+<p>An Add Node Operation will add the node from the Cluster after a Rebalance to make sure the data is distributed and moved around the cluster</p>
+<p><i><b>5. How many replicas do we recommend?</p></i></b>
+<p>1</p>
+<p><i><b>6. What are the 4 determining factors of sizing?</p></i></b>
+<p>RAM Size, Disk Throughput and Sizing, Network Bandwidth, Data Distribution and Safety</p>
+<p><i><b>7. What is the system process (linux and Windows) that controls the data serving component?</p></i></b>
+<p>memcached for both Linux and Windows</p>
+<p><i><b>8. What is the system process (linux and Windows) that controls the cluster manager?</p></i></b>
+<p>Beam.smp for Linux and Erl.exe for Windows</p>
+<p><i><b>9. How much RAM is needed to store 75M items, with 1 replica, key size 50bytes, value size 10K and working set of 80%?  How many nodes of 32GB each will be required?</p></i></b>
+<p>2000GB and 80 Nodes</p>
+<p><i><b>10. Can a Couchbase backup be taken while the system is running?</p></i></b>
+<p>A Backup is possible on a running Couchbase, just that it has to be taken on an individual bucket on all nodes using the cbbackup utility</p>
+<p><i><b>11. What are the 3 options for restoring Couchbase data?</p></i></b>
+<p>Restoring a cluster to a previous state, to the same cluster(same configuration in terms of the IP Addresses, Same Number of Nodes), Restoring a cluster to a previous state, to a different cluster(in case of a Cloud Environment where Ips have changed). Restoring a cluster to a different configuration(In case of Data Being Corrupted)</p>
+<p><i><b>12. What happens immediately to all requests when a Couchbase node fails?</p></i></b>
+<p>The Data Becomes Unavailable for Sometime till the Failover is Kicked in so that the Replica Data gets promoted to the Active Portion from the respective node for it to be Served</p>
+<p><i><b>13. What does a node state of “pending” mean?</p></i></b>
+<p>A node is able to connect to the Cluster Management Service but the data is not available.</p>
+<p><i><b>14. What does a node state of “down” mean?</p></i></b>
+<p>Cannot Connect to Node through Cluster Management System</p>
+<p><i><b>15. What does a node state of “up” mean?</p></i></b>
+<p>Up and Running Serving Requests. Able to Connect to Cluster Management System(CMS) and the data is also available</p>
+<p><i><b>16. How many active vbuckets should a cluster have?  A node?  A bucket?</p></i></b>
+<p>1024*(number of buckets), 1024/(number of nodes), 1024</p>
+<p><i><b>17. What if there are less active vbuckets?</p></i></b>
+<p>This means that the data is not available(part of that data is not available)</p>
+<p><i><b>18. How many replica vbuckets should a cluster have?</p></i></b>
+<p>1024*(number of buckets)</p>
+<p><i><b>19. What is expiration?</p></i></b>
+<p>This is one of the metadata for an item that can be set to store documents indefinitely which is the time to live, post which the CouchBase Server would delete it from RAM</p>
+<p><i><b>20. What is the expiration purger?</p></i></b>
+<p>This is system which runs every hour in the cluster that deletes the items that have been expired to make sure that the RAM is free'd for active items</p>
+<p><i><b>21. What happens when an item expires?</p></i></b>
+<p>The item will be removed from RAM and Asynchronously from  Hard-Disk</p>
+<p><i><b>22. What is ejection?</p></i></b>
+<p>Ejection is a mechansim Used in CouchBased Buckets to remove data from Memory and to provide room for active and more frequently used information. This process operates in conjunction with Disk Persistence so that Data is Persisted in Disk and can be safely Removed from RAM</p>
+<p><i><b>23. What is eviction?</p></i></b>
+<p>Eviction is the process of removing information entirely from memory for memcached buckets. The memcached system uses a least recently used (LRU) algorithm to remove data from the system entirely when it is no longer used.</p>
+<p><i><b>24. What is the low water mark?</p></i></b>
+<p>Low Water mark level is the goal of the RAM till which eviction happens to disk.</p>
+<p><i><b>25. What is the high water mark?</p></i></b>
+<p>The goal is to size the RAM available to Couchbase so that all your document IDs, the document ID meta data, along with the working set values fit into memory in your cluster, just below the point at which Couchbase will start evicting values to disk (the High Water Mark)</p>
+<p><i><b>26. What is mem_used?</p></i></b>
+<p>It's the amount of RAM used by the couchbase server. If the Mem_used hits the RAM size, then will face OOM issue.“Mem_used should be less than ep_mem_high_wat(this is where the Disk starts ejection)”.</p>
+<p><i><b>27. What are 3 ways of viewing statistics in Couchbase and what are the differences between them?</p></i></b>
+<p>Web UI(Admin console) – shows graphs for monitoring, CLI – Helps us to get the stats using cbstats script, REST API</p>
+<p><i><b>28. What script is used for gathering stats?</p></i></b>
+<p>cbcollect_info and cbstats</p>
+<p><i><b>29. Which bucket do these gather stats for: “[script_name] localhost:11210 all” or “[script_name] localhost:11210 all test”</p></i></b>
+<p>cbstats localhost:11210 all - Provides statistics for a named bucket. Connection information for the bucket including attempted connections, rejections and port information,Hits and Misses: hits are the number of requests made for bucket information and misses are requests made for keys that cannot be found. Both hit- and miss- statistics are grouped by operation,Memory quota and usage.</p>
+<p><i><b>30. What does stats command “tap” show you?  “dispatcher”?  “timings”?</p></i></b>
+<p>cbstats tap will provide information about the TAP backfill process, is it running or not,  It shows dispatcher logs, (there are read, write, read only dispatchers which shows the logs of  read & write operations) , Shows history and time durations of different read/write operations. in milliseconds,</p>
+<p><i><b>31. What script is used for backup?</p></i></b>
+<p>cbbackup</p>
+<p><i><b>32. What script is used for restore?</p></i></b>
+<p>cbrestore</p>
+<p><i><b>33. Where are the logs stored?</p></i></b>
+<p>logs are scored in  /opt/couchbase/var/lig/couchbase/logs.,  cbbrowse_logs helps you to browse for logs and can be redirected to a file</p>
+<p><i><b>34. What is the server quota?  What is the bucket quota?</p></i></b>
+<p>The total amount of memory (RAM) alloted for a server in a cluster,  The total amount of memory (RAM) alloted for a specific bucket per node</p>
+<p><i><b>35. What is a “working set”?</p></i></b>
+<p>Memory is one of the most important factors that determines how smoothly your cluster will operate. Couchbase is well suited for applications that want most of its active dataset in memory. This data that is actively used at any given point in time is called the Working Set. It is very important that enough memory is allocated for the entire Working Set to live in memory.</p>
+<p><i><b>36. Why is disk throughput important?</p></i></b>
+<p>One of the big advantages that Couchbase provides is the decoupling of disk IO and RAM. This basic concept allows us to provide extremely high performance at very low and consistent latencies. It also makes Couchbase capable of handling very high write loads without affecting the application's performance.However, Couchbase still needs to be able to write data to disk and so your disks need to be capable of handling a steady stream of incoming data. It is important to analyze your application's write load and provide enough disk throughput to match. Information is written to disk through the disk write queue. The internal statistics system monitors the number of outstanding items in the disk write queue and can give you the information you need. The peak the disk write queue load shows how many items stored in Couchbase Server would be lost in the event of a server failure.</p>
+<p><i><b>37. What are two ways of adding capacity to a Couchbase cluster?  Which one is recommended?</p></i></b>
+<p>Adding Nodes, Increase RAM Size, but recommended is the former(Nodes Addition)</p>
+<p><i><b>38. What is the pending rebalance list?  What is the active server list?</p></i></b>
+<p>This list will help you  find the nodes to be added/removed to the active server list or cluster. Active Servers are the one's which are up and running to serve client requests and part of the cluster.</p>
+<p><i><b>39. What does pending add/remove mean?</p></i></b>
+<p>This is an identifier which indicates a state before re-balance after an add or remove</p>
+<p><i><b>40. What is an TMP_OOM, OOM message?</p></i></b>
+<p>When Couchbase Server determines that there is not enough memory to store information immediately, the server will return TMP_OOM, the temporary out of memory error. This is designed to indicate that the inability to store the requested information is only a temporary, not a permanent, lack of memory. When the client receives this error, the storage process can either be tried later or fail, dependending on the client and application requirements.</p>
+<p><i><b>41. What do you know when you see an error that starts with SERVER_ERROR...?</p></i></b>
+<p>The server is unable to respond to a Client Request due to an unexpected condition</p>
+<p><i><b>42. What happens when RAM is completely full but there is still a disk write queue?  What happens when RAM is completely full but there is no disk write queue?</p></i></b>
+<p>To Answer</p>
+<p><i><b>43. What is the difference between port 11210, port 11211 and port 8091?</p></i></b>
+<p>8091 – Admin port(WEB UI), the client API uses to connect to the Server to get the vBucket map. VbucketMap comes from the node using the port 11210. Now using the vBucket map, the data request will be made through the port 11210 to the exact server. The cluster also pushes the vBucket map in case of a topology change. 11211 - Server-side Moxi port for standard memcached client access</p>
+<p><i><b>44. What is a vbucket map?</p></i></b>
+<p>This is a map that holds the vBucket Ids to the Server/Node names. Every Client has a piece of code that takes a key to query the server to get back the vBucket Map</p>
+<p><i><b>45. What is a vbucket and how many are there?</p></i></b>
+<p>A vBucket is defined as the owner of a subset of the key space of a Couchbase cluster. These vBuckets are used to allow information to be distributed effectively across the cluster. The vBucket system is used both for distributing data, and for supporting replicas (copies of bucket data) on more than one node. Clients access the information stored in a bucket by communicating directly with the node response for the corresponding vBucket. There are (1024 * number of buckets) vBuckets in a cluster.</p>
+<p><i><b>46. What pieces of information get stored with every document?</p></i></b>
+<p>Binary Large Object(blob) of opaque binary data that doesn't conform to a rigid, pre-defined schema from the perspective of the database  management system itself</p>
+<p><i><b>47. How large can a document be?</p></i></b>
+<p>20MB</p>
+<p><i><b>48. How large can an individual key be?</p></i></b>
+<p>250 bytes</p>
+<p><i><b>49. What is Moxi?  Why do you have to use it?  What is our best practice for deploying Moxi?</p></i></b>
+<p>A Moxi is basically a proxy(that has the mapping of document Ids to Server Nodes) that can be incorporated on the server or client side. Incorporating it on the server means , when a client makes a request, the first time it goes to a random server in the cluster which reads the vBucket Map to identify the node and the request is server from the respective node. In case of it being on a client side, the client already holds the vBucket map and it can directly go to the respective server the first time. In the former case the latency is high and its a bottle neck if on the server side, only 1/3 rd of the requests are being server than to 1/100th of the load if on the client side.</p>
+<p><i><b>50. What happens when a get request comes for an item that is not cached in RAM?</p></i></b>
+<p>The server responds with a Data Not Found Message.</p>
+<p><i><b>51. What are the differences between a Couchbase bucket and a memcached bucket?</p></i></b>
+<p>A couchbase bucket internally uses a Memcache layer for caching and supports replication. A memcache bucket doesn't allow replication and in case of node crash, all data is lost.</p>
+<p><i><b>52. Does a Couchbase bucket include memcached?</p></i></b>
+<p>Yes</p>
+<p><i><b>53. What is a vbucketID?</p></i></b>
+<p>A vBucketId is a key in the Vbucket Map that has the Server Node mapped to it.</p>
+<p><i><b>54. What is a CAS ID?</p></i></b>
+<p>CAS ID is a part of a meta data which is basically a counter that gets incremented everytime when a key is been modified.</p>
+<p><i><b>55. What is ep_engine?</p></i></b>
+<p>This is the connector between the memcached layer and the persistence layer. This has code that takes care of interactions with the disk
+<p><i><b>56. What is ns_server?</p></i></b>
+<p>This helps to connect to the server using the port 8091</p>
+<p><i><b>57. What is the disk persistence in 1.x?</p></i></b>
+<p>SQL Lite</p>
+<p><i><b>58. Where does the Web UI get its data from?</p></i></b>
+<p>Web-UI gets the data from the REST API</p>
+<p><i><b>59. What are 2 uses for the REST API?</p></i></b>
+<p>Administration and Client Library Connection(A client connects to the server using the REST API which returns the copy of the vBucket map)</p>
+<p><i><b>60. If there is 1 replica configured, how many copies of each key are present?</p></i></b>
+<p>2</p>
+<p><i><b>61. What is some of the information stored within the metadata for each key?</p></i></b>
+<p>The metadata includes document_id(key), cas_id(a counter that indicates the number of times a key being modified), TTL(expiration time), time-stamp, and other data structures.</p>
+<p><i><b>62. What portions of data can be ejected?  Which can’t?</p></i></b>
+<p>Keys and Metadata can prevail in RAM while the values can be ejected once they are written to disk. The reason being faster retrieval as data is being indexed in RAM and to make sure the RAM has only necessary information.</p>
+<p><i><b>63. How does a key get to a server?</p></i></b>
+<p>A key is hashed to a vBucket ID which again is mapped to a server.</p>
+<p><i><b>64. List and describe all of the operations that a client may perform to Couchbase</p></i></b>
+<p>Client Operations</p></i></b>
+<p>Set, Get, Touch, Get & Touch, Replace, Add, Delete, Append, Prepend, Increment, Decrement.
+<p><i><b>65. What does a client application use to connect to Couchbase?</p></i></b>
+<p>A Client application uses a driver to connect to the couchbase server. The driver is responsible for connectivity(has the updated vBucket Map everytime), Data Transfer, Topology Changes etc.</p>
+<p><i><b>66. What happens if an application sends a request to a Couchbase server for a vbucket in state “replica”?  “dead”?  “pending”?  “active”?</p></i></b>
+<p>Active – The data is served, Pending – The server responds with data not available response, Replica/Dead – The data is not served with a response being “Not my vBucket”.</p>
+<p><i><b>67. What is TTL?</p></i></b>
+<p>Time to Live or Expiration is the time in which an item prevails indefinitely in RAM and cleaned up by the hourly auto-purger from RAM and asynchronously removed from hard-disk</p>
+<p><i><b>68. What does an expiration of 0 mean?</p></i></b>
+<p>An item doesn't have an expiration.</p>
+<p><i><b>69. When does the application get an acknowledgment for a write operation?</p></i></b>
+<p>When the data is written to RAM, the application gets an acknowledgment for a write operation</p>
+<p><i><b>70. What is DGM?</p></i></b>
+<p>When the size of data in disk exceeds the size of RAM. Two possible ways of detecting a DGM is using Resident Item Ratio and Cache Miss Ratio.</p>
+<p><i><b>71. What is a bucket?</p></i></b>
+<p>Couchbase Server provides data management services using named buckets. These are isolated virtual containers for data. A bucket is a logical grouping of physical resources within a cluster of Couchbase Servers. They can be used by multiple client applications across a cluster. Buckets provide a secure mechanism for organizing, managing, and analyzing data storage resources. </p>
+<p><i><b>72. What is the disk write queue?</p></i></b>
+<p>This queue has the list of items which are basically linked-list. Couchbase has implemented disk writing as a 2-queue system and they are tracked by the stats. The first queue is where mutations are immediately placed. Whenever there are items in that queue, our "flusher" (disk writer) comes along and takes all the items off of that queue, places them into the other one and begins writing to disk. Since disk performance is so dramatically different than RAM, this allows us to continue accepting new writes while we are (possibly slowly) writing new ones to the disk. The flusher will process 250k items a a time, then perform a disk commit and continue this cycle until its queue is drained. When it has completed everything in its queue, it will either grab the next group from the first queue or essentially sleep until there are more items to write.</p>
+<p><i><b>73. What is the cache miss ratio?</p></i></b>
+<p>This is the ratio of reads/requests that have happened from RAM to reads/requests from Hard-disk</p>
+<p><i><b>74. What is a TAP stream?What are the main uses of TAP?</p></i></b>
+<p>A TAP stream in general is nothing but data flowing out from a node to the client or between nodes. This can happen during re-balance or replication .</p>
+<p><i><b>75. What is warmup?</p></i></b>
+<p>A warm-up is a state where RAM reads all the information available in the disk and creates an index which is mostly the meta data of items which can be used for faster retrieval. This is done to make sure that RAM has information what is available and what is not in Hard-disk</p>
+<p><i><b>76. What is a cluster? (in context of Couchbase)</p></i></b>
+<p>A cluster is logical grouping of couchbase nodes.All nodes within the cluster are identical and provide the same functionality. Each node is capable of managing the cluster and each node can provide aggregate statistics and operational information about the cluster. User data is is stored across the entire cluster through the vBucket system.</p>
+<p><i><b>77. What is a client? (in context of Couchbase)</p></i></b>
+<p>A client is the application that talks to the server</p>
+<p><i><b>78. What is a server and Node? (in context of Couchbase)</p></i></b>
+<p>A server or a Node in terms of Couchbase is a server where couchbase is installed and ready to serve requests</p>
+<p><i><b>79. Why is server-side Moxi bad?</p></i></b>
+<p>A Moxi is basically a proxy(that has the mapping of document Ids to Server Nodes) that can be incorporated on the server or client side. Incorporating it on the server means , when a client makes a request, the first time it goes to a random server in the cluster which reads the vBucket Map to identify the node and the request is server from the respective node. In case of it being on a client side, the client already holds the vBucket map and it can directly go to the respective server the first time. In the former case the latency is high and its a bottle neck if on the server side, only 1/3 rd of the requests are being server than to 1/100th of the load if on the client side.</p>
+<p><i><b>80. What is a TAP backoff?</p></i></b>
+<p>A TAP by definition in couchbase context means inter-node communication. A Tap Back-off is a scenario where when a source server sends data and if the destination server is not in a position to accept, it will back-off. This usually happens when disk write queue is over 1 million items and also during re-balance.</p>
+<p><i><b>81. What is resident item ratio?</p></i></b>
+<p>Items Cached in Memory(Active+Replica+Pending) to Items in Hard-disk</p>
+<p><i><b>82. What is backfill?</p></i></b>
+<p>Backfill is the first step in the replication process involving reading all data for a given active vBucket and sending it to the server that is responsible for the replica. This can put increased load on the disk subsystem as well as network bandwidth but is not designed to impact any client activity.</p>
+<p><i><b>83. Is data available during a rebalance?</p></i></b>
+<p>The data is definitely available during re-balance</p>
+<p><i><b>84. How does an application server route a request into a Couchbase cluster?</p></i></b>
+<p>An application server uses a client driver to connect to the couchbase which responds with a vBucket Map. The client uses the vBucket map to talk to the respective server for the requested operation.</p>
+
+</body>
+</head>
+</html>
