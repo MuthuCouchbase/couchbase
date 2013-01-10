@@ -1,8 +1,8 @@
-#!/usr/in/perl
 use strict;
 use warnings;
-my ($host,$date,$bucket,$flag,$value);
-open(FILE,"<", "ns_server1.log") or die "Couldn't open file\n";
+my ($host,$date,$bucket,$flag,$value,$flag1,$value1,$host1);
+my $file_name = $ARGV[0];
+open(FILE,"<", $file_name) or die "Couldn't open file\n";
 while(<FILE>) {
    chomp($_);
    if($_ =~ /INFO REPORT.*?(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})/) {
@@ -17,12 +17,12 @@ while(<FILE>) {
       print $date.",".$host.","."HOST_LEVEL_STATS,".$flag.",".$value."\n";
    }
    if($_ =~ /ns_1@([^:]+):.*?Stats for bucket "([^"]+)"/) {
-      $host = $1;
+      $host1 = $1;
       $bucket = $2;
    }
-   if($_ =~ /auth_cmds|auth_errors|bucket_conns|bytes|bytes_read|bytes_written|cmd_get|cmd_set|connection_structures|curr_connections|curr_items|daemon_connections|evictions|limit_maxbytes|reclaimed|total_connections|total_items/) {
-      ($flag,$value) = split("  +",$_);
-      print $date.",".$host.",".$bucket.",".$flag.",".$value."\n";
+   if($_ =~ /auth_cmds|auth_errors|bucket_conns|bytes|bytes_read|bytes_written|cmd_get|cmd_set|connection_structures|curr_connections|curr_items |daemon_connections|evictions|limit_maxbytes|reclaimed|total_connections|total_items /) {
+      ($flag1,$value1) = split("  +",$_);
+      print $date.",".$host1.",".$bucket.",".$flag1.",".$value1."\n";
    }
 
 }
