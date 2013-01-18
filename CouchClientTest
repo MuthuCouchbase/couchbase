@@ -1,0 +1,34 @@
+import java.net.URI;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.net.*;
+
+import com.couchbase.client.CouchbaseClient;
+import net.spy.memcached.internal.GetFuture;
+import net.spy.memcached.internal.OperationFuture;
+public class CouchClientTest {
+    public static void main(String args[]) throws IOException  {
+        List<URI> uris = new LinkedList<URI>();
+        uris.add(URI.create("http://IP:8091/pools"));
+
+        CouchbaseClient client = null;
+        try {
+        client = new CouchbaseClient(uris,"couch", "couch");
+        for (;;) {
+            final int availableServersCount = client.getAvailableServers().size();
+            Map<SocketAddress, Map<String, String>> perHostStats = client.getStats();
+            Set<SocketAddress> cbHosts = perHostStats.keySet();
+            SocketAddress[] clusterMembers = cbHosts.toArray(new SocketAddress[cbHosts.size()]);
+            System.out.println ("availableServersCount= " + availableServersCount +" clusterMembers= " + clusterMembers.length);
+            Thread.sleep(10*1000);
+         }
+         }
+         catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
