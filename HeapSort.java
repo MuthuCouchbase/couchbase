@@ -2,14 +2,14 @@ import java.io.IOException;
 public class HeapSort {
     public static void main(String args[]) throws IOException {
        int [] array = {1,4,2,8,5,9,6};
-       System.out.println("\n  UnSorted array\n---------------\n");
+       System.out.println("---------- UnSorted array ---------------");
        for(int i=0;i<array.length;i++) {
-           System.out.println("The array is "+array[i]);
+           System.out.print(" "+array[i]);
        }
        for(int i=array.length;i > 1;i--) {
           heapSort(array, i-1);
        }
-       System.out.println("\n  Sorted array\n---------------\n");
+       System.out.println("---------- Sorted array ---------------");
        for (int i = 0; i < array.length; i++) {
            System.out.print(" "+array[i]);
        }
