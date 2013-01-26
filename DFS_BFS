@@ -1,0 +1,33 @@
+Create a Queue Q
+Queue the vertex to Q
+mark it v
+while(Q is not empty) {
+   t = dequeue from Q
+   if(t is what we are looking for) {
+      return true;
+   }
+   for edges e(Adjacent Edges Q) {
+      u = e->AdjacentVertex;
+      if(u is not marked) {
+         mark u;
+         Queue u to Q
+      }
+   }   
+   return none;
+}
+
+DFS:
+DFS()
+mark v as explored
+for edges in v {
+  if edge is not explored {
+     get all vertex {
+        if vertex is not explored {
+           e as discovery edge
+           run DFS;
+        }
+        else {
+           mark e as backedge
+        }
+  }
+} 
