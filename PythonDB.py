@@ -17,7 +17,7 @@ opts, args = parser.parse_args()
 
 if not (opts.all):
         parser.print_usage()
-        sys.exit("One of -f or -a must be specified")
+        sys.exit("All inputs must be specified")
         
 db = MySQLdb.connect("localhost","user","password","dbName")
 cursor = db.cursor()
