@@ -30,6 +30,15 @@ while(<FILE>) {
    if($_ =~ /\{enabled,([^\}]+)\}/) {
       print "AutoFailover Enabled: $1\n";
    }
+   if($_ =~ /\{replica_index,([^\}]+)/) {
+      print "Replica Index: $1\n";
+   }
+   if($_ =~ /\{autocompaction,([^\}]+)\},/) {
+      print "Auto Compaction Enabled: $1\n";
+   }
+   if($_ =~ /\{flush_enabled,([^\}]+)/) {
+      print "Flush Enabled: $1\n";
+   }
    if($_ =~ /^  *\[?{"([^"]+)",/) {
       print "\n";
       print "====Bucket Level Configuration====\n";
@@ -57,6 +66,9 @@ while(<FILE>) {
       print "Number of Servers: $1\n";
    }
    if($_ =~ /\]\}\]\}\]\}\]\}/) {
+      return;
+   }
+   if($_ =~ /\]\]\},/) {
       return;
    }
 }
