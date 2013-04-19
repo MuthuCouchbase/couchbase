@@ -12,6 +12,9 @@ while(<FILE>) {
    if($_ =~ /OS Name:  +(.+)$/) {
       print "OS Name: $1\n";
    }
+   if($_ =~ /^Linux (.+)$/) {
+      print "OS Name: $1\n";
+   }   
    if($_ =~ /^OS Version:  +(.+)$/) {
       print "OS Version: $1\n";
    }
@@ -65,11 +68,12 @@ while(<FILE>) {
    if($_ =~ /{servers,([^,]+)/) {
       print "Number of Servers: $1\n";
    }
-   if($_ =~ /\]\}\]\}\]\}\]\}/) {
+   if($_ =~ /\]\}\]\}\]\}/) {
       return;
    }
-   if($_ =~ /\]\]\},/) {
-      return;
-   }
+   #if($_ =~ /\]\]\},/) {
+    
+    #return;
+   #}
 }
 close(FILE) or warn "Couldn't close file\n";
