@@ -14,7 +14,13 @@ while(<FILE>) {
    }
    if($_ =~ /^Linux (.+)$/) {
       print "OS Name: $1\n";
-   }   
+   }
+   if($_ =~ /^Mem:\s*([^\s]+) total,\s*([^\s]+) used,\s*([^\s]+) free,\s*([^\s]+) buffers/) {
+      print "Total Memory:$1 Memory Used:$2 Free Memory:$3 Buffers:$4\n";                                                                                               
+   }
+   if($_ =~ /^Swap:\s*([^\s]+) total,\s*([^\s]+) used,\s*([^\s]+) free,\s*([^\s]+) cached/) {
+      print "Swap Total:$1 Swap Used:$2 Swap Free:$3 Cached:$4\n";
+   }
    if($_ =~ /^OS Version:  +(.+)$/) {
       print "OS Version: $1\n";
    }
