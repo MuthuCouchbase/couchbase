@@ -30,7 +30,7 @@ while(<FILE>) {
    if($_ =~ /\{enabled,([^\}]+)\}/) {
       print "AutoFailover Enabled: $1\n";
    }
-   if($_ =~ /\{replica_index,([^\}]+)/) {
+   if($_ =~ /\{replica_index,([^\}]+)\},/) {
       print "Replica Index: $1\n";
    }
    if($_ =~ /\{autocompaction,([^\}]+)\},/) {
