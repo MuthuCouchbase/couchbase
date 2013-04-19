@@ -33,7 +33,7 @@ while(<FILE>) {
    if($_ =~ /Available Physical Memory:\s*(.+)$/) {
       print "Available Physical Memory: $1\n";
    }
-   if($_ =~ /couchbase-server ([^\s]+)/) {
+   if($_ =~ /^couchbase-server ([^\s]+)/) {
       print "Couchbase Version: $1\n";
    }
    if($_ =~ /\{enabled,([^\}]+)\}/) {
