@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 my $file = $ARGV[0];
-if(!$file || $file =~ /couchbase.log/) {
+if(!$file || $file !~ /couchbase.log/) {
    print "Usage: perl determineCouchbaseConfig.pl couchbase.log\n";
    die "Argument couchbase.log has to be provided as input\n";
 }
