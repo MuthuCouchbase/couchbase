@@ -71,7 +71,7 @@ while(<FILE>) {
    if($_ =~ /{num_vbuckets,([^\}]+)},/) {
       print "Number of VBuckets: $1\n";
    }  
-   if($_ =~ /{servers,([^,]+)/) {
+   if($_ =~ /{servers,(.+?)\},/) {
       print "Number of Servers: $1\n";
    }
    if($_ =~ /\]\}\]\}\]\}/) {
