@@ -15,7 +15,7 @@ if(!$s3fileName || $s3fileName !~ /ns_server.debug.log/) {
    print "Usage perl CouchbaseStatsGenerator.pl --flags[optional] --s3fileName=ns_server.debug.log --startDate[optional] --endDate[optional] --node[optional]\n";
    die "Please check the inputs\n";
 }
-$flags = "ep_diskqueue_drain,ep_diskqueue_fill,ep_diskqueue_items,ep_diskqueue_memory,ep_flusher_todo,ep_io_num_read,ep_io_num_write,ep_io_read_bytes,ep_io_write_bytes,ep_kv_size,ep_num_non_resident,ep_num_value_ejects,ep_queue_size,ep_tmp_oom_errors,ep_total_enqueued,ep_value_size,vb_active_curr_items,vb_active_eject,vb_active_itm_memory,vb_active_num_non_resident,vb_active_perc_mem_resident,vb_replica_curr_items,vb_replica_itm_memory,vb_replica_num_non_resident,vb_replica_perc_mem_resident" if(!$flags) ;
+$flags = "curr_items,curr_items_tot,ep_diskqueue_drain,ep_diskqueue_fill,ep_diskqueue_items,ep_diskqueue_memory,ep_flusher_todo,ep_io_num_read,ep_io_num_write,ep_io_read_bytes,ep_io_write_bytes,ep_kv_size,ep_num_non_resident,ep_num_value_ejects,ep_queue_size,ep_tmp_oom_errors,ep_total_enqueued,ep_value_size,vb_active_curr_items,vb_active_eject,vb_active_itm_memory,vb_active_num_non_resident,vb_active_perc_mem_resident,vb_replica_curr_items,vb_replica_itm_memory,vb_replica_num_non_resident,vb_replica_perc_mem_resident" if(!$flags) ;
 $flags =~ s/,/\|/g;
 !system("grep -A 217 'Stats for bucket \"' $s3fileName | grep -E 'Stats for bucket \"|$flags' > STATS.txt") or die "Couldn't execute the command\n";
 
@@ -29,7 +29,7 @@ while(<FILE>) {
       $host = $2;
       $bucket = $3;
    }
-   elsif($_ =~ /^(ep|vb|mem_used)/) {
+   elsif($_ =~ /^(ep|vb|mem_used|curr_items)/) {
       my($datapoint,$value) = split("  +",$_);
       if(defined $node && $host == "$node") {
          if($date =~ /$startDate/ || $date =~ /$endDate/) {
