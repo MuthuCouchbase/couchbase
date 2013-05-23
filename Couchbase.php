@@ -7,7 +7,7 @@ while(true) {
    for($i=1;$i < 5001;$i++) {
       $arrayHash["CouchbaseKey".$i] = "Hi Buddy this is Couchbase";
    }
-   $cb->setMulti($booksHash, $expiry = 0, $persist_to = 0, $replicate_to = 0);
+   $cb->setMulti($arrayHash, $expiry = 0, $persist_to = 0, $replicate_to = 0);
    foreach ($arrayHash as $key => $value) {
       $cb->delete($key, $cas = "", $persist_to = 0, $replicate_to = 0);
    }
