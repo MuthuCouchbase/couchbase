@@ -4,7 +4,7 @@ $cb = new Couchbase("54.241.219.191:8091", "", "", "default");
 $arrayHash = array();
 $counter=0;
 ini_set('memory_limit', '-1');
-$file_handle = fopen("name1.txt", "rb");
+$file_handle = fopen("filename.txt", "rb");
 while (!feof($file_handle) ) {
    $line_of_text = fgets($file_handle);
    $parts = explode(',', $line_of_text);
