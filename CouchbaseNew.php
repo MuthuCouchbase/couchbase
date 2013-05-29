@@ -18,7 +18,7 @@ while(true) {
       $counter+=1;
       if($counter%5000 == 0) {
          $cb->setMulti($temp_array, $expiry = 0, $persist_to = 0, $replicate_to = 0);
-         var_dump("Setting and Deleting keys for the $counter time");
+         var_dump("Setting keys for the $counter time");
          $temp_array = array();
       }
    }
