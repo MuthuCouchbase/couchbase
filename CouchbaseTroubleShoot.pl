@@ -1,6 +1,9 @@
+# print "Usage perl CouchbaseTroubleShoot.pl from the cbcollect unzipped folder\n";
+#
+#
 use strict;
 use warnings;
-
+print "Usage perl CouchbaseTroubleShoot.pl\n";
 open(FILE,"<","couchbase.log") or die "Couldn't open file for reading\n";
 while(<FILE>) {
    chomp($_);
