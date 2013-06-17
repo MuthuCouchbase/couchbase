@@ -107,28 +107,28 @@ close(FILE) or warn "Couldn't close file\n";
 
 system("echo \"*******************Initial Toubleshooting**************************************\"");
 
-system("echo \"Checking the Number of Connections by port:\"");
+system("echo \"Checking the Number of Connections by port:**************************************\"");
 system("grep '^tcp' couchbase.log | awk -F\" *\" '{print \$4\" \"\$6}' | grep -E ':8091|:11210|:11211' | sort | uniq -c");
 
-system("echo \"Checking Total Number of Views:\"");
+system("echo \"Checking Total Number of Views:**************************************\"");
 system("grep 'couchbase design docs|Total docs:' -E ddocs.log");
 
-system("echo \"Checking Total Number of Bucket:\"");
+system("echo \"Checking Total Number of Bucket:**************************************\"");
 system("grep 'ep_dbname' stats.log | awk -F\"/\" '{print \$8}' | sort -u | wc -l");
 
-system("echo \"Checking Error in Views:\"");
+system("echo \"Checking Error in Views:**************************************\"");
 system("grep 'views:error' ns_server.views.log");
 
-system("echo \"Checking the bg_fetch and get this over a period of time:\"");
+system("echo \"Checking the bg_fetch and get this over a period of time:**************************************\"");
 system("grep 'ep_bg_fetched:|ep_bg_fetch_delay:' -E stats.log");
 
-system("echo \"Checking System paging activity:\"");
+system("echo \"Checking System paging activity:**************************************\"");
 system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print \$9}' | grep -v '^$'");
 
-system("echo \"Checking if Disk subsystem is overloaded using Iostat, iotop, free\"");
+system("echo \"Checking if Disk subsystem is overloaded using Iostat, iotop, free:**************************************\"");
 system("grep '^free -t' -A 6 couchbase.log");
 
-system("echo \"Checking Memcached memory fragmentation and Unknown Memcached memory leak (as observed at the system level)\"");
+system("echo \"Checking Memcached memory fragmentation and Unknown Memcached memory leak (as observed at the system level):**************************************\"");
 system("grep 'total_allocated_bytes:|total_fragmentation_bytes:' -E stats.log | sort -u");
 
 system("echo \"Checking Log, Data and Indexes are on the same partition.This is due to the requirement of ns_server to periodically update its configuration file, and i
@@ -136,23 +136,23 @@ t will crash if it cannot do so. Keep in mind that a disk partition can be fille
 what causes issues.\"");
 system("grep 'ep_dbname|ep_alog_path' -E stats.log | sort -u");
 
-system("echo \"Checking Disk Full from too much other data\"");
+system("echo \"Checking Disk Full from too much other data:**************************************\"");
 system("grep -A 20 '^df ' couchbase.log");
 
-system("echo \"Checking Disk full from compaction not running or not catching up\"");
+system("echo \"Checking Disk full from compaction not running or not catching up:**************************************\"");
 system("grep -i 'Error' ns_server.couchdb.log\"");
 
-system("echo \"Checking Operating System or Hardware restart:\"");
-system("echo \"Checking OS Errors:\"");
+system("echo \"Checking Operating System or Hardware restart:**************************************\"");
+system("echo \"Checking OS Errors:**************************************\"");
 system("grep panic couchbase.log | head");
 
-system("echo \"Checking Kernel Errors:\"");
+system("echo \"Checking Kernel Errors:**************************************\"");
 system("grep 'ECC' couchbase.log | head");
 
-system("echo \"Checking Host Uptime:\"");
+system("echo \"Checking Host Uptime:**************************************\"");
 system("grep 'uptime' couchbase.log -A 3");
 
-system("echo \"Checking OS Restart Activity:\"");
+system("echo \"Checking OS Restart Activity:**************************************\"");
 system("grep 'Started & configured logging' ns_server.info.log");
 
 system("echo \"*************************************************************************************************\"");
