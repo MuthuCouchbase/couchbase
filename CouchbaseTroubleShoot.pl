@@ -91,7 +91,7 @@ while(<FILE>) {
       print $_."\n";
    };
    if($_ =~ / curr_items:|vb_active_curr_items:|_wat|mem_used|vb_replica_curr_items:|kv_size|bytes:/) {
-   my ($flag, $value) = split(/ +/, $_);
+   my ($flag, $value) = split(/  +/, $_);
    my $key_meta_size = 54+70;
    if($flag =~ / (.+?items):/ ) {
      print $flag."\t$value\tcalculated_$1_size\t".int(($value*$key_meta_size)/(1024*1024*1024))." GB\n" if(length($value) > 10 && $value != "0");
