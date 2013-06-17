@@ -131,9 +131,9 @@ system("grep '^free -t' -A 6 couchbase.log");
 system("echo \"**************************************Checking Memcached memory fragmentation and Unknown Memcached memory leak (as observed at the system level):**************************************\"");
 system("grep 'total_allocated_bytes:|total_fragmentation_bytes:' -E stats.log | sort -u");
 
-system("echo \"**************************************Checking Log, Data and Indexes are on the same partition.This is due to the requirement of ns_server to periodically update its configuration file, and i
-t will crash if it cannot do so. Keep in mind that a disk partition can be filled up from data both inside and outside of Couchbase...but the fact that it filled up is
-what causes issues.\"");
+system("echo \"**************************************Checking Log, Data and Indexes are on the same partition.This is due to the requirement of ns_server to periodically update its configuration file, \
+and it will crash if it cannot do so. Keep in mind that a disk partition can be filled up from data both inside and outside of Couchbase...but the fact that it filled up is
+what causes issues.**************************************\"");
 system("grep 'ep_dbname|ep_alog_path' -E stats.log | sort -u");
 
 system("echo \"**************************************Checking Disk Full from too much other data:**************************************\"");
