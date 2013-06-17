@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 use strict;
 use warnings;
 
@@ -44,7 +43,7 @@ while(<FILE>) {
    if($_ =~ /\{flush_enabled,([^\}]+)/) {
       print "Flush Enabled: $1\n";
    }
-   if($_ =~ /^ *\[?{"([^"]+)",/ && $_ !~ /port_listen|url=|\~s|EVENT_NOSELECT|SASL_|\/opt\/couchbase|\~B|MEMCACHED_TOP_KEYS/) {
+   if($_ =~ /^ +\[?{"([^"]+)",/ && $_ !~ /port_listen|url=|\~s|EVENT_NOSELECT|SASL_|\/opt\/couchbase|\~B|MEMCACHED_TOP_KEYS/) {
       print "\n";
       print "====Bucket Level Configuration====\n";
       print "Bucket Name: $1\n";
@@ -89,15 +88,15 @@ while(<FILE>) {
       print $_."\n";
    };
    if($_ =~ / curr_items:|vb_active_curr_items:|_wat|mem_used|vb_replica_curr_items:|kv_size/) {
-   my ($flag, $value) = split("  +", $_);
+   my ($flag, $value) = split(/ +/, $_);
    my $key_meta_size = 54+70;
    if($flag =~ / (.+?items):/ ) {
-     print $flag."\t$value\tcalculated_$1_size\t".int(($value*$key_meta_size)/(1024*1024*1024))." GB\n" if(length($value) > 10 && $value != 0);
-     print $flag."\t$value\tcalculated_$1_size\t".int(($value*$key_meta_size)/(1024*1024))." MB\n" if(length($value) <= 10 && $value != 0);
+     print $flag."\t$value\tcalculated_$1_size\t".int(($value*$key_meta_size)/(1024*1024*1024))." GB\n" if(length($value) > 10 && $value != "0");
+     print $flag."\t$value\tcalculated_$1_size\t".int(($value*$key_meta_size)/(1024*1024))." MB\n" if(length($value) <= 10 && $value != "0");
    }
-   else {
-      print $flag."\t".int(($value)/(1024*1024*1024))." GB\n" if(length($value) > 10 && $value != 0);
-      print $flag."\t".int(($value)/(1024*1024))." MB\n" if(length($value) <= 10 && $value != 0);
+   elsif($flag =~ /_wat|mem_used|kv_size/) {
+      print $flag."\t".int(($value)/(1024*1024*1024))." GB\n" if(length($value) > 10 && $value ne "0");
+      print $flag."\t".int(($value)/(1024*1024))." MB\n" if(length($value) <= 10 && $value ne "0");
    }
    }
 }
@@ -130,39 +129,7 @@ system("echo \"Checking Memcached memory fragmentation and Unknown Memcached mem
 system("grep 'total_allocated_bytes:|total_fragmentation_bytes:' -E stats.log | sort -u");
 
 system("echo \"Checking Log, Data and Indexes are on the same partition.This is due to the requirement of ns_server to periodically update its configuration file, and i
-t will crash if it cannot do so. Keep in mind that a disk partition can be filled up from data both inside and outside of Couchbase...but the fact that it filled up is 
-what causes issues.\"");
-system("grep 'ep_dbname|ep_alog_path' -E stats.log | sort -u");
-
-[root@ip-10-176-11-72 cbcollect_info_ns_1@192.168.1.50_20130529-131425]# cat abcd                                                                                       
-system("echo \"*******************Initial Toubleshooting**************************************\"");
-
-system("echo \"Checking the Number of Connections by port:\"");
-system("grep '^tcp' couchbase.log | awk -F\" *\" '{print $4\" \"$6}' | grep -E ':8091|:11210|:11211' | sort | uniq -c");
-
-system("echo \"Checking Total Number of Views:\"");
-system("grep 'couchbase design docs|Total docs:' -E ddocs.log");
-
-system("echo \"Checking Total Number of Bucket:\"");
-system("grep 'ep_dbname' stats.log | awk -F\"/\" '{print $8}' | sort -u | wc -l");
-
-system("echo \"Checking Error in Views:\"");
-system("grep 'views:error' ns_server.views.log");
-
-system("echo \"Checking the bg_fetch and get this over a period of time:\"");
-system("grep 'ep_bg_fetched:|ep_bg_fetch_delay:' -E stats.log");
-
-system("echo \"Checking System paging activity:\"");
-system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print $9}' | grep -v '^$'");
-
-system("echo \"Checking if Disk subsystem is overloaded using Iostat, iotop, free\"");
-system("grep '^free -t' -A 6 couchbase.log");
-
-system("echo \"Checking Memcached memory fragmentation and Unknown Memcached memory leak (as observed at the system level)\"");
-system("grep 'total_allocated_bytes:|total_fragmentation_bytes:' -E stats.log | sort -u");
-
-system("echo \"Checking Log, Data and Indexes are on the same partition.This is due to the requirement of ns_server to periodically update its configuration file, and i
-t will crash if it cannot do so. Keep in mind that a disk partition can be filled up from data both inside and outside of Couchbase...but the fact that it filled up is 
+t will crash if it cannot do so. Keep in mind that a disk partition can be filled up from data both inside and outside of Couchbase...but the fact that it filled up is
 what causes issues.\"");
 system("grep 'ep_dbname|ep_alog_path' -E stats.log | sort -u");
 
