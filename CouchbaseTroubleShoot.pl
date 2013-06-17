@@ -44,7 +44,7 @@ while(<FILE>) {
    if($_ =~ /\{flush_enabled,([^\}]+)/) {
       print "Flush Enabled: $1\n";
    }
-   if($_ =~ /^ *\[?{"([^"]+)",/) {
+   if($_ =~ /^ *\[?{"([^"]+)",/ && $_ !~ /port_listen|url=|\~s|EVENT_NOSELECT|SASL_|\/opt\/couchbase|\~B|MEMCACHED_TOP_KEYS/) {
       print "\n";
       print "====Bucket Level Configuration====\n";
       print "Bucket Name: $1\n";
