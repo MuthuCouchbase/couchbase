@@ -108,13 +108,13 @@ close(FILE) or warn "Couldn't close file\n";
 system("echo \"*******************Initial Toubleshooting**************************************\"");
 
 system("echo \"Checking the Number of Connections by port:\"");
-system("grep '^tcp' couchbase.log | awk -F\" *\" '{print $4\" \"$6}' | grep -E ':8091|:11210|:11211' | sort | uniq -c");
+system("grep '^tcp' couchbase.log | awk -F\" *\" '{print \$4\" \"\$6}' | grep -E ':8091|:11210|:11211' | sort | uniq -c");
 
 system("echo \"Checking Total Number of Views:\"");
 system("grep 'couchbase design docs|Total docs:' -E ddocs.log");
 
 system("echo \"Checking Total Number of Bucket:\"");
-system("grep 'ep_dbname' stats.log | awk -F\"/\" '{print $8}' | sort -u | wc -l");
+system("grep 'ep_dbname' stats.log | awk -F\"/\" '{print \$8}' | sort -u | wc -l");
 
 system("echo \"Checking Error in Views:\"");
 system("grep 'views:error' ns_server.views.log");
@@ -123,7 +123,7 @@ system("echo \"Checking the bg_fetch and get this over a period of time:\"");
 system("grep 'ep_bg_fetched:|ep_bg_fetch_delay:' -E stats.log");
 
 system("echo \"Checking System paging activity:\"");
-system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print $9}' | grep -v '^$'");
+system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print \$9}' | grep -v '^$'");
 
 system("echo \"Checking if Disk subsystem is overloaded using Iostat, iotop, free\"");
 system("grep '^free -t' -A 6 couchbase.log");
