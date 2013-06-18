@@ -69,8 +69,14 @@ while(<FILE>) {
    if($_ =~ /{num_vbuckets,([^\}]+)},/) {
       print "Number of VBuckets: $1\n";
    }
-   if($_ =~ /{servers,(.+?)\},/) {
-      print "Number of Servers: $1\n";
+   if($_ =~ /\{servers,/) {
+      my $data = `grep -A 50 \'\{servers,\' couchbase.log`;
+      $data =~ s/\n/ /g;
+      if($data =~ /servers(.+?)map/) {
+         my $servers = $1;
+         $servers =~ s/\{|\]|\[|\}|\'|\s|^,|,$//g;
+         print "Number of Servers: $servers\n";
+      }
    }
    if($_ =~ /\]\}\]\}\]\}/) {
       last;
