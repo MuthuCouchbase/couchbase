@@ -108,7 +108,7 @@ while(<FILE>) {
       print $flag."\t".int(($value)/(1024*1024))." MB\n" if(length($value) <= 10 && $value ne "0");
    }
    elsif($flag =~ /perc_mem_resident:/) {
-      print $flag."\t".$value;
+      print $flag."\t".$value."\n";
    }   
    }
 }
