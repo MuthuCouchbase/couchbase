@@ -123,7 +123,7 @@ system("echo \"**************************************Checking the bg_fetch and g
 system("grep 'ep_bg_fetched:|ep_bg_fetch_delay:' -E stats.log");
 
 system("echo \"**************************************Checking System paging activity:**************************************\"");
-system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print \$9}' | grep -v '^$'");
+system("grep 'vmstat 1' -A 12 couchbase.log | awk -F\" *\" '{print \$9}' | grep -v '^\$'");
 
 system("echo \"**************************************Checking if Disk subsystem is overloaded using Iostat, iotop, free:**************************************\"");
 system("grep '^free -t' -A 6 couchbase.log");
