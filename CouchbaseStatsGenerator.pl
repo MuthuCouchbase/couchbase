@@ -30,7 +30,7 @@ while(<FILE>) {
       $bucket = $3;
    }
    elsif($_ =~ /^(ep|vb|mem_used|curr_items)/) {
-      my($datapoint,$value) = split("  +",$_);
+      my($datapoint,$value) = split("\s\s+",$_);
       if(defined $node && $host == "$node") {
          if($date =~ /$startDate/ || $date =~ /$endDate/) {
             print OUTPUTFILE $date.",".$host.",".$bucket.",".$datapoint.",".$value."\n";
