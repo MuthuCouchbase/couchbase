@@ -2,7 +2,10 @@
 use strict;
 use warnings;
 opendir(DIR,".") or die "Couldn't open dir\n";
-my @files = grep("ADM-",readdir(DIR));                                                                                                                                  
+my @files = grep("zip",readdir(DIR));
+unless (-e "./CouchbaseTroubleShooterNew.pl" || -e "./CouchbaseStatsGenerator.pl") {
+   die "Copy the CouchbaseTroubleShooterNew.pl and CouchbaseStatsGenerator.pl to the current directory with the same name from github\n";
+}  
 foreach(@files) {                                                                                                                                                       
    system("unzip $_");                                                                                                                                                  
 }                                                                                                                                                                       
