@@ -30,7 +30,7 @@ while(<FILE>) {
       $bucket = $3;
    }
    elsif($_ =~ /^(ep|vb|mem_used|curr_items)/) {
-      my($datapoint,$value) = split("\s\s+",$_);
+      my($datapoint,$value) = split("  +",$_); #<b> Make Sure when you copy the script to terminal, edit this to double space as there is a problem that changes to single space while copying
       if(defined $node && $host == "$node") {
          if($date =~ /$startDate/ || $date =~ /$endDate/) {
             print OUTPUTFILE $date.",".$host.",".$bucket.",".$datapoint.",".$value."\n";
