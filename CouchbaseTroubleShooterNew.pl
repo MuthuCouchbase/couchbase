@@ -164,4 +164,8 @@ system("grep 'uptime' couchbase.log -A 3");
 system("echo \"**************************************Checking OS Restart Activity:**************************************\"");
 system("grep 'Started & configured logging' ns_server.info.log");
 
+system("echo \"**************************************Checking NS Server Error Messages:**************************************\"");
+system("grep -E 'Port server memcached exited' ns_server.info.log");
+system("grep -E 'Could not auto-failover node|was automatically failovered' diag.log");
+
 system("echo \"*************************************************************************************************\"");
