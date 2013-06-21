@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+## Run this script from the folder that you have downloaded the files from S3
+## Donot unzip them. The script will do it.
 opendir(DIR,".") or die "Couldn't open dir\n";
 my @files = grep("zip",readdir(DIR));
-unless (-e "./CouchbaseTroubleShooterNew.pl" || -e "./CouchbaseStatsGenerator.pl") {
+unless (-e "/CouchbaseTroubleShooterNew.pl" || -e "/CouchbaseStatsGenerator.pl") {
    die "Copy the CouchbaseTroubleShooterNew.pl and CouchbaseStatsGenerator.pl to the / directory with the same name from github\n";
 }  
 foreach(@files) {                                                                                                                                                       
