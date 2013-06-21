@@ -12,7 +12,7 @@ foreach(@files) {
 my @cbfiles = grep(/cbcollect/,readdir(DIR));
 foreach(@cbfiles) {
    chdir($_);
-   system("perl /CouchbaseTroubleShooterNew > /output_$_.txt");
+   system("perl /CouchbaseTroubleShooterNew.pl > /output_$_.txt");
    system("grep -E 'Port server memcached exited' ns_server.info.log >> /output_$_.txt");
    system("grep -E 'Could not auto-failover node|was automatically failovered' diag.log >> /output_$_.txt");
    system("perl /CouchbaseStatsGenerator.pl --s3fileName=ns_server.debug.log");
