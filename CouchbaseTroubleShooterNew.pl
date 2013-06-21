@@ -122,9 +122,6 @@ system("grep '^tcp' couchbase.log | awk -F\" *\" '{print \$4\" \"\$6}' | grep -E
 system("echo \"**************************************Checking Total Number of Views:**************************************\"");
 system("grep 'couchbase design docs|Total docs:' -E ddocs.log");
 
-system("echo \"**************************************Checking Total Number of Bucket:**************************************\"");
-system("grep 'ep_dbname' stats.log | awk -F\"/\" '{print \$8}' | sort -u | wc -l");
-
 system("echo \"**************************************Checking Error in Views:**************************************\"");
 system("grep 'views:error' ns_server.views.log");
 
