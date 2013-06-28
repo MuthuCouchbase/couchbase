@@ -116,6 +116,9 @@ close(FILE) or warn "Couldn't close file\n";
 
 system("echo \"*******************Initial Toubleshooting**************************************\"");
 
+system("echo \"**************************************Checking the Processes:**************************************\"");
+system("grep 'TIME+' couchbase.log -A 10 | head -15");
+
 system("echo \"**************************************Checking the Number of Connections by port:**************************************\"");
 system("grep '^tcp' couchbase.log | awk -F\" *\" '{print \$4\" \"\$6}' | grep -E ':8091|:11210|:11211' | sort | uniq -c");
 
